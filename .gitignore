@@ -79,3 +79,5 @@ Assets/Audio/.cache/
 Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
 
 Assets/Plugins/FMOD/Cache/
+
+fmod_editor.log
