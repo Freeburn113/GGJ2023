@@ -1,9 +1,11 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using DefaultNamespace.Quests;
+using Events.Events;
 using NaughtyAttributes;
 using ScriptableEvents;
 using UnityEngine;
+using Random = UnityEngine.Random;
 
 namespace DefaultNamespace
 {
@@ -13,6 +15,12 @@ namespace DefaultNamespace
         public float gameTimeInMinutes = 5;
         private float _gameTimeInSeconds;
         private float _timeSinceLastUpdate;
+
+        [SerializeField][BoxGroup("Game Settings")]
+        private float _sunStartPosition;
+        [SerializeField][BoxGroup("Game Settings")]
+        private float _sunEndPosition;
+        
         
         private float _gameScore;
 
@@ -21,6 +29,7 @@ namespace DefaultNamespace
         [Expandable]
         public List<QuestScriptable> quests;
 
+        [SerializeField][Expandable][ReadOnly]
         private QuestScriptable _currentQuest;
 
         [SerializeField][BoxGroup("ScriptableEvents")] 
@@ -33,7 +42,10 @@ namespace DefaultNamespace
         private IntScriptableEvent _scoreUpdateEvent;
         [SerializeField][BoxGroup("ScriptableEvents")]
         private IntScriptableEvent _questTimerUpdateEvent;
-        
+
+
+        [SerializeField][BoxGroup("References")] 
+        private Transform _sun;
         
         private void Start()
         {
@@ -50,6 +62,8 @@ namespace DefaultNamespace
                 _timerUpdateEvent.Raise();
                 _timeSinceLastUpdate = 0;
             }
+
+            SunLoop();
             
             if (_gameTimeInSeconds < 0)
             {
@@ -58,9 +72,27 @@ namespace DefaultNamespace
             }
         }
 
+        private void SunLoop()
+        {
+            //TODO ROTATE SUN
+            // _sun.Rotate(_sun.rotation.x, Mathf.Lerp()_sun.rotation.y, _sun.rotation.z);
+        }
+        
         private void HandleQuests()
         {
+            QuestScriptable tempQuest = ScriptableObject.CreateInstance<QuestScriptable>();
             
+            int rndIndex = Random.Range(0, quests.Count - 1);
+
+            tempQuest.requestedItems = quests[rndIndex].requestedItems;
+            tempQuest.rewardScore = quests[rndIndex].rewardScore;
+            tempQuest.timeLimitInSeconds = quests[rndIndex].timeLimitInSeconds;
+
+            _currentQuest = tempQuest;
+
+            _newQuestEvent.genericValue = _currentQuest;
+            _newQuestEvent.Raise();
+
         }
 
         public void EndGame()

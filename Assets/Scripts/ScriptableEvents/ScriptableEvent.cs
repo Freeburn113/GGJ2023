@@ -8,6 +8,8 @@ namespace ScriptableEvents
     {
         private List<IScriptableEventListener> _listeners = new List<IScriptableEventListener>();
 
+        public object genericValue;
+        
         public void Raise()
         {
             for (int i = _listeners.Count - 1; i >= 0; i--)
