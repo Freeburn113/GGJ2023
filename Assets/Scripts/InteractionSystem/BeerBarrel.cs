@@ -1,4 +1,5 @@
-﻿using UnityEngine;
+﻿using ScriptableEvents;
+using UnityEngine;
 
 namespace InteractionSystem
 {
@@ -12,6 +13,8 @@ namespace InteractionSystem
         private int _amountDroppedOff;
         private int _servingsLeft;
 
+        [SerializeField]
+        private IntScriptableEvent _servingsLeftUpdateEvent;
 
         protected override void OnTriggerEnter(Collider other)
         {

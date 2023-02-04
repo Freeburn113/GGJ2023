@@ -17,12 +17,17 @@ namespace InteractionSystem
             _eventQueue = ServiceLocator.GetService<EventQueue>();
         }
 
+        protected bool PickupTypeWanted(PickupType other)
+        {
+            return wantedPickupTypes.Contains(other);
+        }
+
         protected virtual void OnTriggerEnter(Collider other)
         {
             if (null != other.GetComponent<Pickup>())
             {
                 Pickup pk = other.GetComponent<Pickup>();
-                if(wantedPickupTypes.Contains(pk.pickupType))
+                if(PickupTypeWanted(pk.pickupType))
                 {
                     _eventQueue.Add(new PickupReceivedEvent(pk.pickupType));
                     Destroy(other.gameObject);
