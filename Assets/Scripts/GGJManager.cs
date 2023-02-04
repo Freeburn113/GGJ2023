@@ -75,7 +75,6 @@ namespace DefaultNamespace
             }
             
             _currentQuest.timeLimitInSeconds -= Time.deltaTime;
-            Debug.Log(_currentQuest.timeLimitInSeconds);
             if (_currentQuest.timeLimitInSeconds <= 0)
                 if(_currentQuest.requestedItems.Count > 0)
                     HandleQuests();
@@ -93,6 +92,15 @@ namespace DefaultNamespace
         private void SunLoop()
         {
             //TODO ROTATE SUN
+
+            // Vector3 euler = _sun.rotation.eulerAngles;
+            // euler.x = Mathf.Slerp(euler.x, _sunEndPosition,
+            //     (((gameTimeInMinutes * 60) - _gameTimeInSeconds) / (gameTimeInMinutes * 60)));
+            //
+            // Debug.Log(euler.x);
+            //
+            // _sun.rotation = Quaternion.Euler(euler);
+            //
             // _sun.Rotate(_sun.rotation.x, Mathf.Lerp()_sun.rotation.y, _sun.rotation.z);
         }
         
