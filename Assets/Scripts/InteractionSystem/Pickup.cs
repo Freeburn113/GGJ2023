@@ -4,6 +4,8 @@ using UnityEngine;
 
 namespace InteractionSystem
 {
+    [RequireComponent(typeof(Collider))]
+    [RequireComponent(typeof(Rigidbody))]
     public class Pickup : MonoBehaviour
     {
         public PickupType pickupType;

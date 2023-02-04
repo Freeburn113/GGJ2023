@@ -3,7 +3,7 @@ using UnityEngine;
 
 namespace ScriptableEvents
 {
-    [CreateAssetMenu(fileName = "ScriptableEvent", menuName = "TowerDefense/Events/New ScriptableEvent")]
+    [CreateAssetMenu(fileName = "ScriptableEvent", menuName = "Events/New ScriptableEvent")]
     public class ScriptableEvent : ScriptableObject
     {
         private List<IScriptableEventListener> _listeners = new List<IScriptableEventListener>();

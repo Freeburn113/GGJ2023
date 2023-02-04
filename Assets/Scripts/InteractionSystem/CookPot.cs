@@ -1,19 +1,18 @@
-﻿using System;
-using Pickups;
+﻿
 using UnityEngine;
 
 namespace InteractionSystem
 {
-    public class CookPot : MonoBehaviour
+    public class CookPot : DropOff
     {
-        public PickupType wantedPickupType;
-        private void OnTriggerEnter(Collider other)
+        [SerializeField]
+        private int _amountFuelLeft;
+        [SerializeField]
+        private int _amountFuelPerRoot;
+
+        protected override void OnTriggerEnter(Collider other)
         {
-            if (null != other.GetComponent<Pickup>())
-            {
-                if(other.GetComponent<Pickup>().pickupType == wantedPickupType)
-                    Destroy(other.gameObject);
-            }
+            base.OnTriggerEnter(other);
         }
     }
 }
