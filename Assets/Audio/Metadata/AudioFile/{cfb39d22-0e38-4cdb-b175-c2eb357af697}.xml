@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cfb39d22-0e38-4cdb-b175-c2eb357af697}">
+		<property name="assetPath">
+			<value>Level Theme Calm-V2.wav</value>
+		</property>
+		<property name="isStreaming">
+			<value>true</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>2</value>
+		</property>
+		<property name="length">
+			<value>81.166312500000004</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e883696f-c79d-4b07-9030-fa6b6b0a6029}</destination>
+		</relationship>
+	</object>
+</objects>
