@@ -36,6 +36,7 @@ public class PlayerController : MonoBehaviour
     void Start()
     {
         _animator = GetComponentInChildren<Animator>();
+
         _controller = GetComponent<CharacterController>();
         _transform = GetComponent<Transform>();
     }
