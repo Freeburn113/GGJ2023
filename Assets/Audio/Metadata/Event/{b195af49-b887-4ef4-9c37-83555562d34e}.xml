@@ -137,6 +137,9 @@
 		<property name="pitch">
 			<value>0.300000012</value>
 		</property>
+		<property name="playlistMode">
+			<value>1</value>
+		</property>
 		<relationship name="sounds">
 			<destination>{cc465f7a-ebcc-473d-b5fc-63a316b9a807}</destination>
 			<destination>{0c6d5d0e-093c-4a71-8d01-cfb28a557392}</destination>
@@ -173,9 +176,11 @@
 		<property name="length">
 			<value>0.2578125</value>
 		</property>
-		<property name="name" />
 		<property name="pitch">
 			<value>0.600000024</value>
+		</property>
+		<property name="playlistMode">
+			<value>1</value>
 		</property>
 		<relationship name="sounds">
 			<destination>{af7b81cd-8db5-431d-b896-d2174ab686ee}</destination>
@@ -215,6 +220,9 @@
 		</property>
 		<property name="pitch">
 			<value>0.300000012</value>
+		</property>
+		<property name="playlistMode">
+			<value>1</value>
 		</property>
 		<relationship name="sounds">
 			<destination>{df1d396d-bd2a-48f6-8a6e-3b33971f9d21}</destination>
