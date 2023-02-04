@@ -39,8 +39,7 @@ public class PlayerController : MonoBehaviour
     void Update()
     {
         Move();
-        
-        if(Input.GetKeyDown(KeyCode.E)) Interact();
+        Interact();
     }
 
     private void Move()
@@ -67,30 +66,37 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
+        if (!Input.GetButtonDown("Fire1")) return;
+        
         if (_heldItem)
         {
-            _ray = new Ray(transform.position, _model.transform.forward);
-            RaycastHit hit;
-            if (Physics.Raycast(_ray, out hit, maxRaycastDistance))
+            if (_heldItem.interactionType == InteractionType.ATTACK)
             {
                 bool interacted = false;
-                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-                if (interactable != null)
-                { 
-                    interacted = interactable.Interact(_heldItem.interactionType);
+                _ray = new Ray(transform.position, _model.transform.forward);
+                RaycastHit hit;
+                if (Physics.Raycast(_ray, out hit, maxRaycastDistance))
+                {
+                    
+                    IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                    if (interactable != null)
+                    { 
+                        interacted = interactable.Interact(_heldItem.interactionType);
+                    }
                 }
-
+                
                 if (!interacted)
                 {
                     _heldItem.transform.parent = null;
                     _heldItem.TogglePhysics(true);
                     _heldItem = null;    
                 }
-                
-                
+                return;
             }
             
-            return;
+            _heldItem.transform.parent = null;
+            _heldItem.TogglePhysics(true);
+            _heldItem = null;
         }
         if (_interactable)
         {
@@ -105,7 +111,7 @@ public class PlayerController : MonoBehaviour
             }
             else
             {
-                _interactable.transform.parent = _handSocket.transform;
+                _interactable.transform.position = _handSocket.position;
                 _interactable.transform.parent = _handSocket.transform;
             }
             
