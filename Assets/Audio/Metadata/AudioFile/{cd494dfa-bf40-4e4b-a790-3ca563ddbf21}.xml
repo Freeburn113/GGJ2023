@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="AudioFile" id="{cd494dfa-bf40-4e4b-a790-3ca563ddbf21}">
+		<property name="assetPath">
+			<value>Mumble Fox 1.wav</value>
+		</property>
+		<property name="frequencyInKHz">
+			<value>48</value>
+		</property>
+		<property name="channelCount">
+			<value>1</value>
+		</property>
+		<property name="length">
+			<value>2.4172291666666665</value>
+		</property>
+		<relationship name="masterAssetFolder">
+			<destination>{e883696f-c79d-4b07-9030-fa6b6b0a6029}</destination>
+		</relationship>
+	</object>
+</objects>
