@@ -7,11 +7,14 @@ using UnityEngine;
 [RequireComponent(typeof(CapsuleCollider))]
 public class PlayerController : MonoBehaviour
 {
+    [SerializeField] private Animator _animator;
+
     public float moveSpeed = 10f;
     
     private CharacterController _controller;
     private Transform _transform;
     private Vector3 _moveDirection;
+    private Vector3 _inputDirection;
 
     
     public float maxRaycastDistance = 2.0f;
@@ -32,6 +35,7 @@ public class PlayerController : MonoBehaviour
     
     void Start()
     {
+        _animator = GetComponentInChildren<Animator>();
         _controller = GetComponent<CharacterController>();
         _transform = GetComponent<Transform>();
     }
@@ -45,14 +49,20 @@ public class PlayerController : MonoBehaviour
     private void Move()
     {
         float horizontal = Input.GetAxis("Horizontal");
-        float vertical = Input.GetAxis("Vertical"); 
+        float vertical = Input.GetAxis("Vertical");
+
+        _inputDirection.x = horizontal;
+        _inputDirection.y = vertical;
+        Vector3.Normalize(_inputDirection);
 
         _moveDirection.x = horizontal * moveSpeed;
         _moveDirection.z = vertical * moveSpeed;
 
+        _animator.SetFloat("moveInput", _inputDirection.magnitude);
+
         if (!(horizontal == 0 && vertical == 0))
         {
-            _model.transform.LookAt(_transform.position + new Vector3(_moveDirection.x, 0, _moveDirection.z)); 
+            _model.transform.rotation = Quaternion.Euler(0.0f, MathF.Atan2(vertical, horizontal) * -180 /Mathf.PI + 90, 0.0f);
         }
 
         if (!_controller.isGrounded)
