@@ -22,11 +22,15 @@ namespace InteractionSystem
 
         protected override void OnTriggerEnter(Collider other)
         {
-            if (PickupTypeWanted(other.GetComponent<Pickup>().pickupType))
+            if (null != other.GetComponent<Pickup>())
             {
-                _amountFuelLeft += _amountFuelPerRoot;
-                _fuelLeftUpdateEvent.value = _amountFuelLeft;
-                _fuelLeftUpdateEvent.Raise();
+                Pickup pk = other.GetComponent<Pickup>();
+                if (PickupTypeWanted(pk.pickupType))
+                {
+                    _amountFuelLeft += _amountFuelPerRoot;
+                    _fuelLeftUpdateEvent.value = _amountFuelLeft;
+                    _fuelLeftUpdateEvent.Raise();
+                }
             }
             base.OnTriggerEnter(other);
         }
