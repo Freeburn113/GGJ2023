@@ -1,10 +1,13 @@
 ﻿using System;
+using Pickups;
 using UnityEngine;
 
 namespace InteractionSystem
 {
     public class Pickup : MonoBehaviour
     {
+        public PickupType pickupType;
+        
         private Collider _collider;
         private Rigidbody _rigidbody;
         
