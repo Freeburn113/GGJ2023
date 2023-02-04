@@ -1,8 +1,9 @@
-using System;
+﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace.Quests;
 using Events.Events;
 using NaughtyAttributes;
+using Pickups;
 using ScriptableEvents;
 using UnityEngine;
 using Random = UnityEngine.Random;
@@ -50,7 +51,17 @@ namespace DefaultNamespace
         private void Start()
         {
             _gameTimeInSeconds = gameTimeInMinutes * 60;
+
+            PickupReceivedEvent.Handlers += PickupReceivedHandler;
+            
+            HandleQuests();
         }
+
+        private void OnDestroy()
+        {
+            PickupReceivedEvent.Handlers -= PickupReceivedHandler;
+        }
+
 
         private void Update()
         {
@@ -62,6 +73,13 @@ namespace DefaultNamespace
                 _timerUpdateEvent.Raise();
                 _timeSinceLastUpdate = 0;
             }
+            
+            _currentQuest.timeLimitInSeconds -= Time.deltaTime;
+            Debug.Log(_currentQuest.timeLimitInSeconds);
+            if (_currentQuest.timeLimitInSeconds <= 0)
+                if(_currentQuest.requestedItems.Count > 0)
+                    HandleQuests();
+            
 
             SunLoop();
             
@@ -80,11 +98,19 @@ namespace DefaultNamespace
         
         private void HandleQuests()
         {
+            if (_currentQuest)
+            {
+                if(_currentQuest.requestedItems.Count <= 0)
+                    _gameScore += _currentQuest.rewardScore;
+                _scoreUpdateEvent.value = (int)_gameScore;
+
+                _currentQuest = null;
+            }
             QuestScriptable tempQuest = ScriptableObject.CreateInstance<QuestScriptable>();
             
             int rndIndex = Random.Range(0, quests.Count - 1);
 
-            tempQuest.requestedItems = quests[rndIndex].requestedItems;
+            tempQuest.requestedItems = new List<PickupType>(quests[rndIndex].requestedItems);
             tempQuest.rewardScore = quests[rndIndex].rewardScore;
             tempQuest.timeLimitInSeconds = quests[rndIndex].timeLimitInSeconds;
 
@@ -98,6 +124,19 @@ namespace DefaultNamespace
         public void EndGame()
         {
             
+        }
+        
+        private void PickupReceivedHandler(PickupReceivedEvent e)
+        {
+            if (_currentQuest.requestedItems.Contains(e.pickupType))
+            {
+                _currentQuest.requestedItems.Remove(e.pickupType);
+
+                if (_currentQuest.requestedItems.Count <= 0)
+                {
+                    HandleQuests();
+                }
+            }
         }
     }
 }
