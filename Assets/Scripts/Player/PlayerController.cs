@@ -13,6 +13,8 @@ public class PlayerController : MonoBehaviour
     private Transform _transform;
     private Vector3 _moveDirection;
 
+    
+    public float maxRaycastDistance = 2.0f;
     private Ray _ray;
 
     private Pickup _heldItem;
@@ -26,6 +28,7 @@ public class PlayerController : MonoBehaviour
     private Transform _pickupSocket;
     [SerializeField] 
     private Transform _handSocket;
+    
     
     void Start()
     {
@@ -66,17 +69,46 @@ public class PlayerController : MonoBehaviour
     {
         if (_heldItem)
         {
-            _heldItem.transform.parent = null;
-            _heldItem.TogglePhysics(true);
-            _heldItem = null;
+            _ray = new Ray(transform.position, _model.transform.forward);
+            RaycastHit hit;
+            if (Physics.Raycast(_ray, out hit, maxRaycastDistance))
+            {
+                bool interacted = false;
+                IInteractable interactable = hit.collider.GetComponent<IInteractable>();
+                if (interactable != null)
+                { 
+                    interacted = interactable.Interact(_heldItem.interactionType);
+                }
+
+                if (!interacted)
+                {
+                    _heldItem.transform.parent = null;
+                    _heldItem.TogglePhysics(true);
+                    _heldItem = null;    
+                }
+                
+                
+            }
+            
             return;
         }
         if (_interactable)
         {
-            _interactable.transform.position = _pickupSocket.position;
-            _interactable.transform.parent = _pickupSocket.transform;
+            
             _heldItem = _interactable.GetComponent<Pickup>();
             _heldItem.TogglePhysics(false);
+
+            if (_heldItem.interactionType == InteractionType.PICKUP)
+            {
+                _interactable.transform.position = _pickupSocket.position;
+                _interactable.transform.parent = _pickupSocket.transform;
+            }
+            else
+            {
+                _interactable.transform.parent = _handSocket.transform;
+                _interactable.transform.parent = _handSocket.transform;
+            }
+            
             _interactable = null;
         }
     }

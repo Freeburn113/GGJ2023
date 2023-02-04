@@ -9,6 +9,7 @@ namespace InteractionSystem
     public class Pickup : MonoBehaviour
     {
         public PickupType pickupType;
+        public InteractionType interactionType;
         
         private Collider _collider;
         private Rigidbody _rigidbody;

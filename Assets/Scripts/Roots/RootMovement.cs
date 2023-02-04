@@ -1,10 +1,14 @@
 using Dreamteck.Splines;
 using System.Collections;
 using System.Collections.Generic;
+using InteractionSystem;
 using UnityEngine;
 
-public class RootMovement : MonoBehaviour
+public class RootMovement : MonoBehaviour, IInteractable
 {
+    [SerializeField]
+    private InteractionType activationType;
+
     private SplineComputer _spline;
     private SplinePoint[] _points;
 
@@ -59,5 +63,13 @@ public class RootMovement : MonoBehaviour
             _points[_points.Length - 1].SetPosition(Vector3.Lerp(_spline.GetPoints()[_spline.GetPoints().Length - 2].position,_destination,_moveAlpha));
             _spline.SetPoints(_points);
         }
+    }
+
+    public bool Interact(InteractionType attemptWithType)
+    {
+        if (activationType == attemptWithType)
+            return true;
+        else
+            return false;
     }
 }
