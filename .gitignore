@@ -74,4 +74,8 @@ crashlytics-build.properties
 
 .idea/
 
-Assets/Audio/Metadata/
+Assets/Audio/.cache/
+
+Assets/Plugins/FMOD/Cache/Editor/FMODStudioCache.asset
+
+Assets/Plugins/FMOD/Cache/
