@@ -10,5 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 59de36e8d38e47778bd203cf304e9663, type: 3}
-  m_Name: Radish
+  m_Name: Bread
   m_EditorClassIdentifier: 
+  value: 0

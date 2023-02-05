@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using DefaultNamespace.Quests;
+using Events;
 using Events.Events;
 using NaughtyAttributes;
 using Pickups;
@@ -17,44 +18,37 @@ namespace DefaultNamespace
         private float _gameTimeInSeconds;
         private float _timeSinceLastUpdate;
 
-        [SerializeField][BoxGroup("Game Settings")]
-        private float _sunStartPosition;
-        [SerializeField][BoxGroup("Game Settings")]
-        private float _sunEndPosition;
-        
+        [BoxGroup("Game Settings")] 
+        private float _timeBetweenQuests = 10;
+
+        private float _timeTillNextQuest = 10;
         
         private float _gameScore;
 
-        private float _questTimerLeft;
         
-        [Expandable]
-        public List<QuestScriptable> quests;
+        public List<List<PickupType>> quests;
 
-        [SerializeField][Expandable][ReadOnly]
-        private QuestScriptable _currentQuest;
+        [BoxGroup("Game Settings")][SerializeField]
+        private List<PickupType> _pickupTypes;
 
         [SerializeField][BoxGroup("ScriptableEvents")] 
         private IntScriptableEvent _timerUpdateEvent;
         [SerializeField][BoxGroup("ScriptableEvents")]
-        private ScriptableEvent _newQuestEvent;
+        private IntScriptableEvent _newQuestEvent;
         [SerializeField][BoxGroup("ScriptableEvents")]
-        private ScriptableEvent _questCompletedEvent;
+        private IntScriptableEvent _questCompletedEvent;
         [SerializeField][BoxGroup("ScriptableEvents")]
         private IntScriptableEvent _scoreUpdateEvent;
         [SerializeField][BoxGroup("ScriptableEvents")]
         private IntScriptableEvent _questTimerUpdateEvent;
 
-
-        [SerializeField][BoxGroup("References")] 
-        private Transform _sun;
-        
         private void Start()
         {
             _gameTimeInSeconds = gameTimeInMinutes * 60;
 
             PickupReceivedEvent.Handlers += PickupReceivedHandler;
-            
-            HandleQuests();
+            quests = new List<List<PickupType>>();
+
         }
 
         private void OnDestroy()
@@ -73,15 +67,10 @@ namespace DefaultNamespace
                 _timerUpdateEvent.Raise();
                 _timeSinceLastUpdate = 0;
             }
-            
-            _currentQuest.timeLimitInSeconds -= Time.deltaTime;
-            if (_currentQuest.timeLimitInSeconds <= 0)
-                if(_currentQuest.requestedItems.Count > 0)
-                    HandleQuests();
-            
 
-            SunLoop();
-            
+
+            QuestLoop();
+
             if (_gameTimeInSeconds < 0)
             {
                 // ServiceLocator.GetService<EventQueue>().Add(new TestDataEvent("EndGame;OutOfTime"));
@@ -89,46 +78,96 @@ namespace DefaultNamespace
             }
         }
 
-        private void SunLoop()
-        {
-            //TODO ROTATE SUN
 
-            // Vector3 euler = _sun.rotation.eulerAngles;
-            // euler.x = Mathf.Slerp(euler.x, _sunEndPosition,
-            //     (((gameTimeInMinutes * 60) - _gameTimeInSeconds) / (gameTimeInMinutes * 60)));
-            //
-            // Debug.Log(euler.x);
-            //
-            // _sun.rotation = Quaternion.Euler(euler);
-            //
-            // _sun.Rotate(_sun.rotation.x, Mathf.Lerp()_sun.rotation.y, _sun.rotation.z);
-        }
-        
-        private void HandleQuests()
+        private void QuestLoop()
         {
-            if (_currentQuest)
+            _timeTillNextQuest -= Time.deltaTime;
+            if (_timeTillNextQuest <= 0)
             {
-                if(_currentQuest.requestedItems.Count <= 0)
-                    _gameScore += _currentQuest.rewardScore;
-                _scoreUpdateEvent.value = (int)_gameScore;
-
-                _currentQuest = null;
+                if (quests.Count < 3)
+                {
+                    GenerateNewQuest();
+                }
+                
+                _timeTillNextQuest = _timeBetweenQuests;
             }
-            QuestScriptable tempQuest = ScriptableObject.CreateInstance<QuestScriptable>();
-            
-            int rndIndex = Random.Range(0, quests.Count - 1);
+        }
 
-            tempQuest.requestedItems = new List<PickupType>(quests[rndIndex].requestedItems);
-            tempQuest.rewardScore = quests[rndIndex].rewardScore;
-            tempQuest.timeLimitInSeconds = quests[rndIndex].timeLimitInSeconds;
+        private void GenerateNewQuest()
+        {
+            List<PickupType> newQuest = new List<PickupType>();
+            int meshid = 0;
+            switch (Random.Range(0, 100))
+            {
+                case int n when (n <= 66):
+                    for (int i = 0; i < 3; i++)
+                    {
+                        newQuest.Add(GenerateNewPickup());
+                    }
 
-            _currentQuest = tempQuest;
+                    meshid = 0;
+                    break;
+                case int n when (n <= 90):
+                    for (int i = 0; i < 5; i++)
+                    {
+                        newQuest.Add(GenerateNewPickup());
+                    }
 
-            _newQuestEvent.genericValue = _currentQuest;
+                    meshid = 1; 
+                    break;
+                case int n when (n >= 91):
+                    for (int i = 0; i < 5; i++)
+                    {
+                        newQuest.Add(GenerateNewPickup(true));
+                    }
+
+                    meshid = 2;
+                    break;
+            }
+
+            quests.Add(newQuest);
+            _newQuestEvent.value = quests.IndexOf(newQuest);
             _newQuestEvent.Raise();
 
+            Debug.Log(quests.IndexOf(newQuest));
+            
+            CustomerEvent evt = new CustomerEvent(quests.IndexOf(newQuest), meshid);
+            ServiceLocator.GetService<EventQueue>().Add(evt);
         }
 
+        private PickupType GenerateNewPickup(bool IsRare = false)
+        {
+            int mod = (IsRare) ? 0 : 20;
+
+            switch (Random.Range(0, 100))
+            {
+                case int n when (n + mod <= 20):
+                    return _pickupTypes[0];
+                case int n when (n + mod <= 40):
+                    return _pickupTypes[1]; 
+                case int n when (n + mod <= 50):
+                    return _pickupTypes[2];
+                case int n when (n + mod <= 60):
+                    return _pickupTypes[3];
+                case int n when (n + mod <= 70):
+                    return _pickupTypes[4];
+                case int n when (n + mod <= 80):
+                    return _pickupTypes[5];
+                case int n when (n + mod <= 90):
+                    return _pickupTypes[6];
+                case int n when (n + mod <= 94):
+                    return _pickupTypes[7];
+                case int n when (n + mod <= 97):
+                    return _pickupTypes[8];
+                case int n when (n + mod <= 100):
+                    return _pickupTypes[9];
+                case int n when (n + mod > 100):
+                    return _pickupTypes[9];
+            }
+
+            return _pickupTypes[1];
+        }
+        
         public void EndGame()
         {
             
@@ -136,13 +175,19 @@ namespace DefaultNamespace
         
         private void PickupReceivedHandler(PickupReceivedEvent e)
         {
-            if (_currentQuest.requestedItems.Contains(e.pickupType))
+            foreach (List<PickupType> quest in quests)
             {
-                _currentQuest.requestedItems.Remove(e.pickupType);
-
-                if (_currentQuest.requestedItems.Count <= 0)
+                if (quest.Contains(e.pickupType))
                 {
-                    HandleQuests();
+                    _gameScore += e.pickupType.value;
+                    quest.Remove(e.pickupType);
+                    if (quest.Count <= 0)
+                    {
+                        _questCompletedEvent.value = quests.IndexOf(quest);
+                        quests.Remove(quest);
+                        _questCompletedEvent.Raise();
+                        //finish quest 
+                    }
                 }
             }
         }
