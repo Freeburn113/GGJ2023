@@ -82,6 +82,15 @@ public class PlayerController : MonoBehaviour
 
     private void Interact()
     {
+        if (Input.GetButtonDown("Fire2") && null != _heldItem)
+        {
+            _heldItem.transform.parent = null;
+            _heldItem.TogglePhysics(true);
+            _heldItem.GetComponent<Rigidbody>().isKinematic = false;
+            _heldItem = null;
+            _animator.SetBool("holdingObject", false);
+        }
+        
         if (!Input.GetButtonDown("Fire1")) return;
         
         if (_heldItem)
