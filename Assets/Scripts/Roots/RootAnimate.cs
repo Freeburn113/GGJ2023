@@ -5,23 +5,36 @@ using UnityEngine;
 
 public class RootAnimate : MonoBehaviour
 {
-    private SplineMesh splineMesh;
-    private double _clip = 0.1;
-    [SerializeField] private float animSpeed = 1.0f;
+    private SplineMesh _splineMesh;
+    private float _growthProgress = 0.05f;
+    public float targetGrowth = 0.05f;
+
+    public bool doAnimate = false;
 
     // Start is called before the first frame update
     void Start()
     {
-        splineMesh = GetComponent<SplineMesh>();
+        _splineMesh = GetComponent<SplineMesh>();
+        _splineMesh.SetClipRange(0.0, 0.05f);
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (_clip < 1.0)
+
+        if(targetGrowth > _growthProgress)
         {
-            _clip += Time.deltaTime * animSpeed;
+            _growthProgress += 0.3f * Time.deltaTime;
         }
-        splineMesh.SetClipRange(0.0, _clip);
+        else if(targetGrowth < _growthProgress)
+        {
+            _growthProgress -= 2.0f * Time.deltaTime;
+        }
+
+        if(_growthProgress < 0.05f)
+        {
+            _growthProgress = 0.05f;
+        }
+        _splineMesh.SetClipRange(0.0, _growthProgress);
     }
 }

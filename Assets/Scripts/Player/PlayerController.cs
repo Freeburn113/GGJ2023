@@ -1,4 +1,5 @@
 using System;
+using Dreamteck.Splines;
 using InteractionSystem;
 using Unity.VisualScripting;
 using UnityEngine;
@@ -12,6 +13,8 @@ public class PlayerController : MonoBehaviour
     public float moveSpeed = 10f;
     
     private CharacterController _controller;
+    private RootChopper _chopper;
+
     private Transform _transform;
     private Vector3 _moveDirection;
     private Vector3 _inputDirection;
@@ -38,6 +41,8 @@ public class PlayerController : MonoBehaviour
         _animator = GetComponentInChildren<Animator>();
 
         _controller = GetComponent<CharacterController>();
+        _chopper = GetComponentInChildren<RootChopper>();
+
         _transform = GetComponent<Transform>();
     }
 
@@ -83,31 +88,24 @@ public class PlayerController : MonoBehaviour
         {
             if (_heldItem.interactionType == InteractionType.ATTACK)
             {
-                bool interacted = false;
-                _ray = new Ray(transform.position, _model.transform.forward);
-                RaycastHit hit;
-                if (Physics.Raycast(_ray, out hit, maxRaycastDistance))
-                {
-                    
-                    IInteractable interactable = hit.collider.GetComponent<IInteractable>();
-                    if (interactable != null)
-                    { 
-                        interacted = interactable.Interact(_heldItem.interactionType);
-                    }
-                }
+                _animator.ResetTrigger("attack");
+                _animator.SetTrigger("attack");
                 
-                if (!interacted)
-                {
-                    _heldItem.transform.parent = null;
-                    _heldItem.TogglePhysics(true);
-                    _heldItem = null;
-                    _animator.SetBool("holdingObject", false);
-                }
+                //if (!interacted)
+                //{
+                //    _heldItem.transform.parent = null;
+                //    _heldItem.TogglePhysics(true);
+                //    _heldItem.GetComponent<Rigidbody>().isKinematic = false;
+                //    _heldItem = null;
+                //    _animator.SetBool("holdingObject", false);
+                //}
+                
                 return;
             }
             
             _heldItem.transform.parent = null;
             _heldItem.TogglePhysics(true);
+            _heldItem.GetComponent<Rigidbody>().isKinematic = false;
             _heldItem = null;
             _animator.SetBool("holdingObject", false);
         }
@@ -119,14 +117,17 @@ public class PlayerController : MonoBehaviour
 
             if (_heldItem.interactionType == InteractionType.PICKUP)
             {
-                _interactable.transform.position = _pickupSocket.position;
                 _interactable.transform.parent = _pickupSocket.transform;
+                _interactable.transform.rotation = _pickupSocket.rotation;
+                _interactable.transform.position = _pickupSocket.position;
                 _animator.SetBool("holdingObject", true);
             }
             else
             {
-                _interactable.transform.position = _handSocket.position;
+                _heldItem.GetComponent<Rigidbody>().isKinematic = true;
                 _interactable.transform.parent = _handSocket.transform;
+                _interactable.transform.rotation = _handSocket.rotation;
+                _interactable.transform.position = _handSocket.position;
             }
             
             _interactable = null;
