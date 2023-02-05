@@ -19,7 +19,7 @@ namespace DefaultNamespace
         private float _timeSinceLastUpdate;
 
         [BoxGroup("Game Settings")] 
-        private float _timeBetweenQuests = 10;
+        [SerializeField] float _timeBetweenQuests = 10;
 
         private float _timeTillNextQuest = 10;
         
@@ -42,6 +42,11 @@ namespace DefaultNamespace
         [SerializeField][BoxGroup("ScriptableEvents")]
         private IntScriptableEvent _questTimerUpdateEvent;
 
+        [SerializeField] [BoxGroup("Refs")] private QuestUI _ui1;
+        [SerializeField] [BoxGroup("Refs")] private QuestUI _ui2;
+        [SerializeField] [BoxGroup("Refs")] private QuestUI _ui3;
+
+        private List<QuestUI> _uis;
         private void Start()
         {
             _gameTimeInSeconds = gameTimeInMinutes * 60;
@@ -49,6 +54,10 @@ namespace DefaultNamespace
             PickupReceivedEvent.Handlers += PickupReceivedHandler;
             quests = new List<List<PickupType>>();
 
+            _uis = new List<QuestUI>();
+            _uis.Add(_ui1);
+            _uis.Add(_ui2);
+            _uis.Add(_ui3);
         }
 
         private void OnDestroy()
@@ -113,7 +122,7 @@ namespace DefaultNamespace
                         newQuest.Add(GenerateNewPickup());
                     }
 
-                    meshid = 1; 
+                    meshid = 1;
                     break;
                 case int n when (n >= 91):
                     for (int i = 0; i < 5; i++)
@@ -129,7 +138,9 @@ namespace DefaultNamespace
             _newQuestEvent.value = quests.IndexOf(newQuest);
             _newQuestEvent.Raise();
 
-            Debug.Log(quests.IndexOf(newQuest));
+            
+            _uis[quests.IndexOf(newQuest)].FillQuestUI(newQuest);
+            
             
             CustomerEvent evt = new CustomerEvent(quests.IndexOf(newQuest), meshid);
             ServiceLocator.GetService<EventQueue>().Add(evt);

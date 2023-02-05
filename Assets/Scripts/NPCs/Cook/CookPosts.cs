@@ -8,10 +8,4 @@ public enum CookPosts
     BEERTAP,
     CAULDRON,
     TELEPHONE,
-    SPOT1,
-    SPOT2,
-    SPOT3,
-    SPOT1SEAT,
-    SPOT2SEAT,
-    SPOT3SEAT
 }

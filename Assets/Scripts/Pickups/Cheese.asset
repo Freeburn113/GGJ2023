@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59de36e8d38e47778bd203cf304e9663, type: 3}
   m_Name: Cheese
   m_EditorClassIdentifier: 
-  value: 0
+  value: 300
+  image: {fileID: 21300000, guid: e2d857d2729b9e2449150a2fcfe756ea, type: 3}

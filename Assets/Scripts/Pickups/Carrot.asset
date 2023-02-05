@@ -13,3 +13,4 @@ MonoBehaviour:
   m_Name: Carrot
   m_EditorClassIdentifier: 
   value: 100
+  image: {fileID: 21300000, guid: 052ecb8619477c8478a4a0dce6f8991e, type: 3}

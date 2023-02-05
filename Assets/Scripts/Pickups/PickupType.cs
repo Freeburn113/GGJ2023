@@ -6,5 +6,6 @@ namespace Pickups
     public class PickupType : ScriptableObject
     {
         public int value;
+        public Sprite image;
     }
 }

@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 1511401544383006508}
   - component: {fileID: 1511401544383006509}
   - component: {fileID: 1511401544383006506}
+  - component: {fileID: 1335806755269046938}
   m_Layer: 0
   m_Name: NPC
   m_TagString: Untagged
@@ -117,35 +118,40 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4cab0cc5787745a79dcfbabc795cdc26, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _state: 0
-  _targetState: 0
   _id: 0
   Meshes:
   - {fileID: 8986046136871938111}
   - {fileID: 4604587866889870151}
   - {fileID: 4604587866889870151}
-  moveSpeed: 5
-  destinations:
-  - Posts: 0
-    pos: {x: -14.56, y: 16.2, z: -5.07}
-  - Posts: 1
-    pos: {x: 9.13, y: 16.2, z: -4}
-  - Posts: 2
-    pos: {x: 9.13, y: 16.2, z: -4}
-  - Posts: 3
-    pos: {x: 9.13, y: 16.2, z: -4}
-  - Posts: 4
-    pos: {x: -6.93, y: 16.2, z: -6.33}
-  - Posts: 5
-    pos: {x: -5.75, y: 16.2, z: -6.33}
-  - Posts: 6
-    pos: {x: -9.13, y: 16.2, z: -6.33}
-  - Posts: 7
-    pos: {x: -2.66, y: 16.2, z: -4}
-  - Posts: 8
-    pos: {x: -5.68, y: 16.2, z: -4}
-  - Posts: 9
-    pos: {x: -9.13, y: 16.2, z: -4}
+--- !u!114 &1335806755269046938
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1511401544383006507}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1cc68cee97eb475fb6c64c2b08a4ac55, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  Event: {fileID: 11400000, guid: b265904502b869d4cba2dc2c22f3945f, type: 2}
+  response:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1511401544383006506}
+        m_TargetAssemblyTypeName: CustomerBehaviour, Assembly-CSharp
+        m_MethodName: DeactiveMesh
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+  disableObjectAfterRegister: 0
 --- !u!1001 &1511401542921763212
 PrefabInstance:
   m_ObjectHideFlags: 0

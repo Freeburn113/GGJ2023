@@ -12,3 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 59de36e8d38e47778bd203cf304e9663, type: 3}
   m_Name: Beet root
   m_EditorClassIdentifier: 
+  value: 150
+  image: {fileID: 21300000, guid: 6e73f990c294eb0438cb4cfa21f3de06, type: 3}
