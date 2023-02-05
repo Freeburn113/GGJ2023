@@ -75,7 +75,7 @@ MonoBehaviour:
     m_Value: 55261.973
   aerosolDensity:
     m_OverrideState: 0
-    m_Value: 0.01192826
+    m_Value: 0.158
   aerosolTint:
     m_OverrideState: 0
     m_Value: {r: 0.9, g: 0.9, b: 0.9, a: 1}
@@ -90,7 +90,7 @@ MonoBehaviour:
     m_Value: 8
   groundTint:
     m_OverrideState: 1
-    m_Value: {r: 0.020342773, g: 0.03628726, b: 0.0754717, a: 1}
+    m_Value: {r: 0.04439809, g: 0.06858474, b: 0.11320752, a: 1}
   groundColorTexture:
     m_OverrideState: 0
     m_Value: {fileID: 0}
@@ -161,7 +161,7 @@ MonoBehaviour:
     m_Value: {r: 0.1331943, g: 0.21644582, b: 0.33962262, a: 1}
   tint:
     m_OverrideState: 1
-    m_Value: {r: 0.3601307, g: 0.46836057, b: 0.5188679, a: 1}
+    m_Value: {r: 0.16164878, g: 0.19786982, b: 0.3679245, a: 1}
   maxFogDistance:
     m_OverrideState: 1
     m_Value: 5000
@@ -187,10 +187,10 @@ MonoBehaviour:
     m_OverrideState: 1
     m_Value: 1
   albedo:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: {r: 1, g: 1, b: 1, a: 1}
   globalLightProbeDimmer:
-    m_OverrideState: 1
+    m_OverrideState: 0
     m_Value: 1
   depthExtent:
     m_OverrideState: 0
