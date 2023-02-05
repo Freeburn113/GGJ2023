@@ -13,11 +13,11 @@ public class FootPoofs : MonoBehaviour
     [SerializeField] private ParticleSystem _foot_poof_right;
     public void FootPoofLeft()
     {
-        if (_controller.isGrounded) { _foot_poof_left.Play(); }
+        if (_controller.isGrounded) { _foot_poof_left.Play(); _audio_emitter_left.Play(); }
     }
 
     public void FootPoofRight()
     {
-        if (_controller.isGrounded) { _foot_poof_right.Play(); }
+        if (_controller.isGrounded) { _foot_poof_right.Play(); _audio_emitter_right.Play(); }
     }
 }

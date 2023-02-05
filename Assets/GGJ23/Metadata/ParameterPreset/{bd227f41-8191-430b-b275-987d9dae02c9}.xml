@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<objects serializationModel="Studio.02.02.00">
+	<object class="ParameterPreset" id="{bd227f41-8191-430b-b275-987d9dae02c9}">
+		<property name="name">
+			<value>Tension</value>
+		</property>
+		<relationship name="folder">
+			<destination>{85342ba0-2cb1-4cb1-a5f9-1c7ce775ac9e}</destination>
+		</relationship>
+		<relationship name="parameter">
+			<destination>{cd50a109-b3e5-4c04-b0c4-93d2c7d7390b}</destination>
+		</relationship>
+	</object>
+	<object class="GameParameter" id="{cd50a109-b3e5-4c04-b0c4-93d2c7d7390b}">
+		<property name="maximum">
+			<value>2</value>
+		</property>
+		<property name="initialValue">
+			<value>0</value>
+		</property>
+	</object>
+</objects>

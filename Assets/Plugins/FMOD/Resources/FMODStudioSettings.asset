@@ -415,10 +415,10 @@ MonoBehaviour:
   m_Name: FMODStudioSettings
   m_EditorClassIdentifier: 
   switchSettingsMigration: 1
-  HasSourceProject: 0
-  HasPlatforms: 0
-  sourceProjectPath: 
-  sourceBankPath: Assets/Audio/Build
+  HasSourceProject: 1
+  HasPlatforms: 1
+  sourceProjectPath: Assets/GGJ23/GGJ23.fspro
+  sourceBankPath: Assets/GGJ23/Build
   sourceBankPathUnformatted: 
   BankRefreshCooldown: 5
   ShowBankRefreshWindow: 1
@@ -427,7 +427,7 @@ MonoBehaviour:
   AutomaticSampleLoading: 0
   EncryptionKey: 
   ImportType: 0
-  TargetAssetPath: FMODBanks
+  TargetAssetPath: Assets/FMOD build/
   TargetBankFolder: 
   EventLinkage: 0
   LoggingLevel: 2
@@ -440,7 +440,7 @@ MonoBehaviour:
   RealChannelSettings: []
   Plugins: []
   MasterBanks:
-  - Desktop/Master
+  - Master
   Banks: []
   BanksToLoad: []
   LiveUpdatePort: 9264
