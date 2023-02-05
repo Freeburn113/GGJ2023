@@ -6,6 +6,9 @@ public class FootPoofs : MonoBehaviour
 {
     [SerializeField] private CharacterController _controller;
 
+    [SerializeField] private FMODUnity.StudioEventEmitter _audio_emitter_left;
+    [SerializeField] private FMODUnity.StudioEventEmitter _audio_emitter_right;
+
     [SerializeField] private ParticleSystem _foot_poof_left;
     [SerializeField] private ParticleSystem _foot_poof_right;
     public void FootPoofLeft()

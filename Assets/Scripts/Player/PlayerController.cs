@@ -100,7 +100,8 @@ public class PlayerController : MonoBehaviour
                 {
                     _heldItem.transform.parent = null;
                     _heldItem.TogglePhysics(true);
-                    _heldItem = null;    
+                    _heldItem = null;
+                    _animator.SetBool("holdingObject", false);
                 }
                 return;
             }
@@ -108,6 +109,7 @@ public class PlayerController : MonoBehaviour
             _heldItem.transform.parent = null;
             _heldItem.TogglePhysics(true);
             _heldItem = null;
+            _animator.SetBool("holdingObject", false);
         }
         if (_interactable)
         {
@@ -119,6 +121,7 @@ public class PlayerController : MonoBehaviour
             {
                 _interactable.transform.position = _pickupSocket.position;
                 _interactable.transform.parent = _pickupSocket.transform;
+                _animator.SetBool("holdingObject", true);
             }
             else
             {
