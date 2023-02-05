@@ -192,6 +192,7 @@ namespace DefaultNamespace
                 {
                     _gameScore += e.pickupType.value;
                     quest.Remove(e.pickupType);
+                    _uis[quests.IndexOf(quest)].FillQuestUI(quest);
                     if (quest.Count <= 0)
                     {
                         _questCompletedEvent.value = quests.IndexOf(quest);
